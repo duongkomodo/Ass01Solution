@@ -1,0 +1,43 @@
+﻿<Window
+    x:Class="SalesWPFApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SalesWPFApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WindowMain"
+    Width="331"
+    Height="324"
+    mc:Ignorable="d">
+    <Grid Margin="0,0,0,-6">
+        <TextBlock
+            Margin="16,43,17,194"
+            Style="{StaticResource MaterialDesignHeadline3TextBlock}"
+            Text="Admin Menu"
+            TextAlignment="Center" />
+        <StackPanel
+            x:Name="AdminTab"
+            Margin="24,140,25,37"
+            Orientation="Vertical">
+            <Button
+                x:Name="btnMemberMenu"
+                Margin="5"
+                Content="Member"
+                Style="{StaticResource MaterialDesignPaperLightButton}"
+                ToolTip="Resource name: MaterialDesignPaperLightButton" />
+            <Button
+                x:Name="btnOrderMenu"
+                Margin="5"
+                Content="Order"
+                Style="{StaticResource MaterialDesignPaperLightButton}"
+                ToolTip="Resource name: MaterialDesignPaperLightButton" />
+            <Button
+                x:Name="btnProductMenu"
+                Margin="5"
+                Content="Product"
+                Style="{StaticResource MaterialDesignPaperLightButton}"
+                ToolTip="Resource name: MaterialDesignPaperLightButton" />
+        </StackPanel>
+
+    </Grid>
+</Window>
