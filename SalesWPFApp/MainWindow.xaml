@@ -7,37 +7,70 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="WindowMain"
     Width="331"
-    Height="324"
+    Height="400"
     mc:Ignorable="d">
-    <Grid Margin="0,0,0,-6">
-        <TextBlock
-            Margin="16,43,17,194"
-            Style="{StaticResource MaterialDesignHeadline3TextBlock}"
-            Text="Admin Menu"
-            TextAlignment="Center" />
-        <StackPanel
-            x:Name="AdminTab"
-            Margin="24,140,25,37"
-            Orientation="Vertical">
-            <Button
-                x:Name="btnMemberMenu"
-                Margin="5"
-                Content="Member"
-                Style="{StaticResource MaterialDesignPaperLightButton}"
-                ToolTip="Resource name: MaterialDesignPaperLightButton" />
-            <Button
-                x:Name="btnOrderMenu"
-                Margin="5"
-                Content="Order"
-                Style="{StaticResource MaterialDesignPaperLightButton}"
-                ToolTip="Resource name: MaterialDesignPaperLightButton" />
-            <Button
-                x:Name="btnProductMenu"
-                Margin="5"
-                Content="Product"
-                Style="{StaticResource MaterialDesignPaperLightButton}"
-                ToolTip="Resource name: MaterialDesignPaperLightButton" />
-        </StackPanel>
-
+    <Grid>
+        <Grid x:Name="gridMember">
+            <TextBlock
+                Width="auto"
+                Height="auto"
+                Margin="16,43,17,194"
+                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                Text="Member Menu"
+                TextAlignment="Center" />
+            <StackPanel
+                Height="150"
+                Margin="24,140,25,78"
+                Orientation="Vertical">
+                <Button
+                    x:Name="btnChangeProfile"
+                    Margin="5"
+                    Content="Change Profile"
+                    Style="{StaticResource MaterialDesignPaperLightButton}"
+                    ToolTip="Resource name: MaterialDesignPaperLightButton" />
+                <Button
+                    x:Name="btnViewOrder"
+                    Margin="5"
+                    Content="View Order"
+                    Style="{StaticResource MaterialDesignPaperLightButton}"
+                    ToolTip="Resource name: MaterialDesignPaperLightButton" />
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="gridAdmin">
+            <TextBlock
+                Width="auto"
+                Height="auto"
+                Margin="16,43,17,194"
+                Style="{StaticResource MaterialDesignHeadline3TextBlock}"
+                Text="Admin Menu"
+                TextAlignment="Center" />
+            <StackPanel
+                x:Name="AdminTab"
+                Height="150"
+                Margin="24,148,25,86"
+                Orientation="Vertical">
+                <Button
+                    x:Name="btnMemberMenu"
+                    Margin="5"
+                    Click="btnMemberMenu_Click"
+                    Content="Member"
+                    Style="{StaticResource MaterialDesignPaperLightButton}"
+                    ToolTip="Resource name: MaterialDesignPaperLightButton" />
+                <Button
+                    x:Name="btnOrderMenu"
+                    Margin="5"
+                    Click="btnOrderMenu_Click"
+                    Content="Order"
+                    Style="{StaticResource MaterialDesignPaperLightButton}"
+                    ToolTip="Resource name: MaterialDesignPaperLightButton" />
+                <Button
+                    x:Name="btnProductMenu"
+                    Margin="5"
+                    Click="btnProductMenu_Click"
+                    Content="Product"
+                    Style="{StaticResource MaterialDesignPaperLightButton}"
+                    ToolTip="Resource name: MaterialDesignPaperLightButton" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

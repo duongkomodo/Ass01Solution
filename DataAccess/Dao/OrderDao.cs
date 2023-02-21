@@ -91,7 +91,21 @@ namespace DataAccess.Dao {
                 return false;
             }
         }
+        public int getMaxOrderId() {
 
+            try {
+                int maxId = DataProvider.Instance.DB.Orders.Max(x => x.OrderId);
+
+                return maxId;
+
+            } catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+
+                return -1;
+            }
+
+
+        }
         public List<Order>? LoadAllOrders() {
 
             try {

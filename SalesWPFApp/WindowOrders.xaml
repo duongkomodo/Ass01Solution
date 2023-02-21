@@ -1,12 +1,348 @@
-﻿<Window x:Class="SalesWPFApp.WindowOrders"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SalesWPFApp"
-        mc:Ignorable="d"
-        Title="WindowOrders" Height="450" Width="800">
-    <Grid>
-        
+﻿<Window
+    x:Class="SalesWPFApp.WindowOrders"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SalesWPFApp"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WindowOrders"
+    Width="800"
+    Height="450"
+    Loaded="Window_Loaded"
+    mc:Ignorable="d">
+    <Grid Margin="0,0,0,-6" ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="9*" />
+        </Grid.RowDefinitions>
+        <Canvas>
+            <TextBlock
+                Canvas.Left="10"
+                Canvas.Top="10"
+                Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                Text="ORDER DATE: " />
+            <DatePicker
+                x:Name="dpEndDate"
+                Canvas.Left="300"
+                Width="100"
+                materialDesign:HintAssist.Hint="End Date"
+                materialDesign:TextFieldAssist.HasClearButton="True"
+                SelectedDateChanged="dpEndDate_SelectedDateChanged"
+                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+            <DatePicker
+                x:Name="dpStartDate"
+                Canvas.Left="150"
+                Width="100"
+                materialDesign:HintAssist.Hint="Start Date"
+                materialDesign:TextFieldAssist.HasClearButton="True"
+                IsTodayHighlighted="True"
+                SelectedDateChanged="dpStartDate_SelectedDateChanged"
+                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+        </Canvas>
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+            <materialDesign:PopupBox
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                StaysOpen="True">
+                <materialDesign:PopupBox.ToggleContent>
+                    <materialDesign:PackIcon
+                        Width="20"
+                        Height="20"
+                        Kind="Add" />
+                </materialDesign:PopupBox.ToggleContent>
+                <Grid Width="300" Margin="8,8,8,8">
+                    <Grid.Resources>
+                        <Style BasedOn="{StaticResource MaterialDesignCheckBox}" TargetType="CheckBox">
+                            <Setter Property="Margin" Value="8,8,10,8" />
+                        </Style>
+                        <Style BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
+                            <Setter Property="Margin" Value="8,8,8,8" />
+                            <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
+                        </Style>
+                        <Style BasedOn="{StaticResource MaterialDesignComboBox}" TargetType="ComboBox">
+                            <Setter Property="Margin" Value="8,8,8,8" />
+                            <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
+                        </Style>
+                        <Style BasedOn="{StaticResource MaterialDesignDatePicker}" TargetType="DatePicker">
+                            <Setter Property="Margin" Value="8,8,8,8" />
+                            <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="8,8,8,16"
+                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                        Text="ADD ORDER" />
+                    <ComboBox
+                        x:Name="cbMemberAdd"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        materialDesign:ComboBoxAssist.MaxLength="2"
+                        materialDesign:HintAssist.Hint="Member"
+                        materialDesign:HintAssist.HintOpacity=".26"
+                        DisplayMemberPath="Email"
+                        IsEditable="True"
+                        SelectedValuePath="MemberId" />
+                    <DatePicker
+                        x:Name="dpOrderDateAdd"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        materialDesign:HintAssist.Hint="Order Date"
+                        SelectedDate="{Binding Path=OrderDate, Mode=OneWay}" />
+                    <DatePicker
+                        x:Name="dpRequiredDateAdd"
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        materialDesign:HintAssist.Hint="Required Date"
+                        SelectedDate="{Binding Path=RequiredDate, Mode=OneWay}" />
+                    <DatePicker
+                        x:Name="dpShippedDateAdd"
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        materialDesign:HintAssist.Hint="Shipped Date"
+                        SelectedDate="{Binding Path=ShippedDate, Mode=OneWay}" />
+                    <TextBox
+                        x:Name="tbFreightAdd"
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        materialDesign:HintAssist.Hint="Freight" />
+                    <StackPanel
+                        Grid.Row="6"
+                        Grid.ColumnSpan="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            x:Name="btnAddOrder"
+                            Click="btnAddOrder_Click"
+                            Content="_Add" />
+                        <Button Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" Content="_Cancel">
+                            <Button.Style>
+                                <Style BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="Button">
+                                    <Setter Property="Foreground" Value="Red" />
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:PopupBox>
+        </StackPanel>
+        <Grid
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="5">
+
+            <DataGrid
+                x:Name="dgvOrders"
+                Margin="5"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                CanUserReorderColumns="False"
+                CanUserResizeRows="False">
+                <DataGrid.Resources>
+                    <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+                    </Style>
+                    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                </DataGrid.Resources>
+
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Binding="{Binding OrderId}" Header="Order ID" />
+                    <DataGridTextColumn Binding="{Binding MemberId}" Header="Member" />
+                    <DataGridTextColumn Binding="{Binding OrderDate}" Header="Order Date" />
+                    <DataGridTextColumn Binding="{Binding RequiredDate}" Header="Required Date" />
+                    <DataGridTextColumn Binding="{Binding ShippedDate}" Header="Shipped Date" />
+                    <DataGridTextColumn Binding="{Binding Freight, StringFormat='#,##0₫'}" Header="Freight" />
+                    <DataGridTemplateColumn Header="Action">
+
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel
+                                    Height="32"
+                                    Margin="0,0,49,0"
+                                    Orientation="Horizontal">
+                                    <StackPanel
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+                                        <materialDesign:PopupBox
+                                            x:Name="popupUpdate"
+                                            HorizontalContentAlignment="Center"
+                                            VerticalContentAlignment="Center"
+                                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                            Opened="popupUpdate_Opened"
+                                            StaysOpen="True">
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <Border BorderBrush="Black" BorderThickness="1">
+                                                    <materialDesign:PackIcon
+                                                        Width="50"
+                                                        Height="30"
+                                                        Background="#b17cff"
+                                                        Kind="Edit" />
+                                                </Border>
+                                            </materialDesign:PopupBox.ToggleContent>
+                                            <Grid Width="300" Margin="8,8,8,8">
+                                                <Grid.Resources>
+                                                    <Style BasedOn="{StaticResource MaterialDesignCheckBox}" TargetType="CheckBox">
+                                                        <Setter Property="Margin" Value="8,8,10,8" />
+                                                    </Style>
+                                                    <Style BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
+                                                        <Setter Property="Margin" Value="8,8,8,8" />
+                                                        <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
+                                                    </Style>
+                                                    <Style BasedOn="{StaticResource MaterialDesignDatePicker}" TargetType="DatePicker">
+                                                        <Setter Property="Margin" Value="8,8,8,8" />
+                                                        <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
+                                                    </Style>
+                                                </Grid.Resources>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Grid.Column="0"
+                                                    Margin="8,8,8,16"
+                                                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                                    Text="UPDATE ORDER" />
+                                                <ComboBox
+                                                    x:Name="cbMemberUpdate"
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    materialDesign:ComboBoxAssist.MaxLength="2"
+                                                    materialDesign:HintAssist.Hint="Member"
+                                                    materialDesign:HintAssist.HintOpacity=".26"
+                                                    DisplayMemberPath="Email"
+                                                    IsEditable="True"
+                                                    ItemsSource="{Binding Path=DataContext.MyMemberList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                    SelectedValue="{Binding MemberId}"
+                                                    SelectedValuePath="MemberId"
+                                                    SelectionChanged="cbMemberUpdate_SelectionChanged" />
+                                                <DatePicker
+                                                    x:Name="dpOrderDateUpdate"
+                                                    Grid.Row="2"
+                                                    Grid.Column="0"
+                                                    materialDesign:HintAssist.Hint="Order Date"
+                                                    SelectedDate="{Binding Path=OrderDate, Mode=OneWay}"
+                                                    SelectedDateChanged="dpOrderDateUpdate_SelectedDateChanged" />
+                                                <DatePicker
+                                                    x:Name="dpRequiredDateUpdate"
+                                                    Grid.Row="3"
+                                                    Grid.Column="0"
+                                                    materialDesign:HintAssist.Hint="Required Date"
+                                                    SelectedDate="{Binding Path=RequiredDate, Mode=OneWay}"
+                                                    SelectedDateChanged="dpRequiredDateUpdate_SelectedDateChanged" />
+                                                <DatePicker
+                                                    x:Name="dpShippedDateUpdate"
+                                                    Grid.Row="4"
+                                                    Grid.Column="0"
+                                                    materialDesign:HintAssist.Hint="Shipped Date"
+                                                    SelectedDate="{Binding Path=ShippedDate, Mode=OneWay}"
+                                                    SelectedDateChanged="dpShippedDateUpdate_SelectedDateChanged" />
+                                                <TextBox
+                                                    x:Name="tbFreightUpdate"
+                                                    Grid.Row="5"
+                                                    Grid.Column="0"
+                                                    materialDesign:HintAssist.Hint="Freight"
+                                                    Text="{Binding Path=Freight, Mode=OneWay}"
+                                                    TextChanged="tbFreightUpdate_TextChanged" />
+                                                <StackPanel
+                                                    Grid.Row="6"
+                                                    Grid.ColumnSpan="2"
+                                                    HorizontalAlignment="Right"
+                                                    Orientation="Horizontal">
+                                                    <Button
+                                                        x:Name="btnUpdateOrder"
+                                                        Click="btnUpdateOrder_Click"
+                                                        Content="_Update" />
+                                                    <Button Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" Content="_Cancel">
+                                                        <Button.Style>
+                                                            <Style BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="Button">
+                                                                <Setter Property="Foreground" Value="Red" />
+                                                            </Style>
+                                                        </Button.Style>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </materialDesign:PopupBox>
+                                    </StackPanel>
+                                    <Button
+                                        x:Name="btnDetailOrder"
+                                        Width="50"
+                                        Height="30"
+                                        HorizontalContentAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        Background="#b17cff">
+                                        <materialDesign:PackIcon
+                                            Width="20"
+                                            Height="20"
+                                            Foreground="Black"
+                                            Kind="ArrowDownThick" />
+                                    </Button>
+
+                                    <Button
+                                        x:Name="btnRemoveOrder"
+                                        Width="50"
+                                        Height="30"
+                                        HorizontalContentAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        Background="Red"
+                                        Click="btnRemoveOrder_Click">
+                                        <materialDesign:PackIcon
+                                            Width="20"
+                                            Height="20"
+                                            Foreground="Black"
+                                            Kind="Trash" />
+                                    </Button>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </Grid>
+
     </Grid>
 </Window>

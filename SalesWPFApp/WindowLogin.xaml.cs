@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Formats.Asn1;
 using System.Xml;
 using DataAccess.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace SalesWPFApp {
     /// <summary>
@@ -38,10 +39,31 @@ namespace SalesWPFApp {
 
             var memberBusinessLogic = provider.GetService<IMemberBusiness>();
 
-            if (memberBusinessLogic.Login(tbEmail.Text,pbPassword.Password) is false) {
-                MessageBox.Show("heheheh");
-            };
+            if ((bool)chkbLoginAsAdmin.IsChecked is false) {
+                if (memberBusinessLogic.Login(tbEmail.Text,pbPassword.Password) is true) {
+                    MainWindow mainWindow = new MainWindow(false);
+                    this.Hide();
+                    mainWindow.ShowDialog();
 
+                } else {
+                    MessageBox.Show("Wrong email or password!","Warning",MessageBoxButton.OK,MessageBoxImage.Error);
+                };
+            } else {
+                var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                var email = MyConfig.GetSection("DefaultAccount")["Email"];
+                var password = MyConfig.GetSection("DefaultAccount")["Password"];
+                if (tbEmail.Text.Equals(email) && pbPassword.Password.Equals(password)) {
+                    MainWindow mainWindow = new MainWindow(true);
+                    this.Hide();
+
+                    mainWindow.ShowDialog();
+
+
+
+                } else {
+                    MessageBox.Show("Wrong email or password!","Warning",MessageBoxButton.OK,MessageBoxImage.Error);
+                }
+            }
 
         }
 

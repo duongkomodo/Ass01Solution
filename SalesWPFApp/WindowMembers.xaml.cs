@@ -16,7 +16,8 @@ namespace SalesWPFApp {
 
         ServiceProvider provider;
         List<Member> MyDataList;
-        public WindowMembers() {
+
+        public WindowMembers(bool isAdmin) {
             InitializeComponent();
 
             this.DataContext = this;
@@ -24,12 +25,13 @@ namespace SalesWPFApp {
             var services = new ServiceCollection();
             services.AddScoped<IMemberBusiness,MemberBusinessLogic>();
             provider = services.BuildServiceProvider();
+            if (isAdmin is false) {
+                stackMemberAdd.Visibility = Visibility.Collapsed;
+            }
 
         }
 
         private void Window_Loaded(object sender,RoutedEventArgs e) {
-
-
             LoadDataGrid();
         }
 

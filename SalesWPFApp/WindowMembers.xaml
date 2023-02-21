@@ -41,6 +41,7 @@
             </TextBox>
 
             <StackPanel
+                x:Name="stackMemberAdd"
                 Grid.Row="0"
                 Grid.Column="1"
                 HorizontalAlignment="Center"
